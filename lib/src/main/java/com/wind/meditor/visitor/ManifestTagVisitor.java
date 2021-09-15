@@ -14,12 +14,13 @@ public class ManifestTagVisitor extends ModifyAttributeVisitor {
     private ModificationProperty properties;
 
     private List<String> hasIncludedUsesPermissionList = new ArrayList<>();
-
+    private List<String> deleteUserPermissionList;
     private UserPermissionTagVisitor.IUsesPermissionGetter addedPermissionGetter;
 
-    public ManifestTagVisitor(NodeVisitor nv, ModificationProperty properties) {
+    public ManifestTagVisitor(NodeVisitor nv, ModificationProperty properties, List<String> deleteUserPermissionList) {
         super(nv, properties.getManifestAttributeList());
         this.properties = properties;
+        this.deleteUserPermissionList = deleteUserPermissionList;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class ManifestTagVisitor extends ModifyAttributeVisitor {
 
         if (ns != null && (NodeValue.UsesPermission.TAG_NAME).equals(name)) {
             NodeVisitor child = super.child(null, NodeValue.UsesPermission.TAG_NAME);
-            return new UserPermissionTagVisitor(child, null, ns);
+            return new UserPermissionTagVisitor(child, null, ns, deleteUserPermissionList);
         }
 
         NodeVisitor child = super.child(ns, name);
@@ -38,7 +39,7 @@ public class ManifestTagVisitor extends ModifyAttributeVisitor {
         }
 
         if (NodeValue.UsesPermission.TAG_NAME.equals(name)) {
-            return new UserPermissionTagVisitor(child, getUsesPermissionGetter(), null);
+            return new UserPermissionTagVisitor(child, getUsesPermissionGetter(), null, deleteUserPermissionList);
         }
         return child;
     }

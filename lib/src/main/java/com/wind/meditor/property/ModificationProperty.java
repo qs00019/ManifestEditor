@@ -11,6 +11,7 @@ import java.util.List;
 public class ModificationProperty {
     
     private List<String> usesPermissionList = new ArrayList<>();
+    private List<String> deleteUsesPermissionList = new ArrayList<>();
     private List<MetaData> metaDataList = new ArrayList<>();
     private List<MetaData> deleteMetaDataList = new ArrayList<>();
 
@@ -21,8 +22,18 @@ public class ModificationProperty {
         return usesPermissionList;
     }
 
+    public List<String> getDeleteUsesPermissionList() {
+        return deleteUsesPermissionList;
+    }
+
+
     public ModificationProperty addUsesPermission(String permissionName) {
         usesPermissionList.add(permissionName);
+        return this;
+    }
+
+    public ModificationProperty addDeleteUsesPermission(String permissionName) {
+        deleteUsesPermissionList.add(permissionName);
         return this;
     }
 

@@ -56,6 +56,10 @@ public class ManifestEditorMain extends BaseCommand {
             "name to the manifest file, multi option is supported", argName = "uses-permission-name")
     private List<String> usesPermissionList = new ArrayList<>();
 
+    @Opt(opt = "dup", longOpt = "deleteUsesPermission", description = "delete the app uses permission " +
+            "name to the manifest file, multi option is supported", argName = "uses-permission-name")
+    private List<String> deleteUsesPermissionList = new ArrayList<>();
+
     @Opt(opt = "ma", longOpt = "manifestAttribute", description = "set the app manifest attribute, " +
             " name and value should be separated by " + MULTI_NAME_SEPERATER +
             " , if name is in android namespace, prefix \"" + ANDROID_NAMESPACE + "\" should be set" +
@@ -211,6 +215,11 @@ public class ManifestEditorMain extends BaseCommand {
         for (String permission : usesPermissionList) {
             property.addUsesPermission(permission);
         }
+
+        for (String permission : deleteUsesPermissionList) {
+            property.addDeleteUsesPermission(permission);
+        }
+
 
         for (String manfestAttr : manifestAttributeList) {
             String[] nameValue = manfestAttr.split(MULTI_NAME_SEPERATER);

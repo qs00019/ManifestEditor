@@ -63,7 +63,7 @@ public class ManifestEditor {
                 @Override
                 public NodeVisitor child(String ns, String name) {
                     NodeVisitor child = super.child(ns, name);
-                    return new ManifestTagVisitor(child, properties);
+                    return new ManifestTagVisitor(child, properties, properties.getDeleteUsesPermissionList());
                 }
             });
         } catch (IOException e) {
